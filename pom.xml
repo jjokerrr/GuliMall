@@ -14,6 +14,7 @@
         <module>ware</module>
         <module>order</module>
         <module>member</module>
+        <module>renren-fast</module>
     </modules>
 
 
