@@ -1,4 +1,4 @@
-package com.mall.ware;
+package com.mall.ware.entity;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
