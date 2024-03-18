@@ -1,0 +1,19 @@
+# 应用服务 WEB 访问端口
+server:
+  port: 8003
+
+# 数据源配置
+spring:
+  datasource:
+    url: jdbc:mysql://192.168.121.130:3306/mall_oms?useUnicode=true&characterEncoding=utf8&useSSL=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: 10222375
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+
+# Mybatis-Plus配置
+mybatis-plus:
+  mapper-locations: classpath:mapper/**/*.xml  # mapper文件位置
+  global-config:
+    db-config:
+      id-type: auto # 设置全局实体类主键自增

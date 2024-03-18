@@ -4,18 +4,24 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.mall</groupId>
     <artifactId>mall</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <name>mall</name>
     <description>聚合服务</description>
     <packaging>pom</packaging>
     <modules>
-        <module>product</module>
-        <module>coupon</module>
-        <module>ware</module>
-        <module>order</module>
-        <module>member</module>
+        <module>mall-product</module>
+        <module>mall-coupon</module>
+        <module>mall-ware</module>
+        <module>mall-order</module>
+        <module>mall-member</module>
         <module>renren-fast</module>
+        <module>renren-generator</module>
+        <module>mall-common</module>
     </modules>
-
-
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.9.RELEASE</version>
+        <relativePath/>
+    </parent>
 </project>
