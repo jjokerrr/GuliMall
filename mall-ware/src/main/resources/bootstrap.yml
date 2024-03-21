@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: mall-ware
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.121.130:8848
+      config:
+        server-addr: 192.168.121.130:8848
+        namespace: b8952d63-e2b2-47ed-a197-853ce6fb376e

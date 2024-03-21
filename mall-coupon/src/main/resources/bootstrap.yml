@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: mall-coupon
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.121.130:8848
+      config:
+        server-addr: 192.168.121.130:8848
+        namespace: a7bca6f1-13b9-4755-b96c-89cd0b94b170

@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: mall-product
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.121.130:8848
+      config: # nacos的配置中心和注册中心地址需要分开配置
+        server-addr: 192.168.121.130:8848
+        namespace: 3fcae13e-fc00-42b8-8b4f-c3185dd51de0

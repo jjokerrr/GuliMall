@@ -1,7 +1,6 @@
 # 应用服务 WEB 访问端口
 server:
   port: 8000
-
 # 数据源配置
 spring:
   datasource:
@@ -11,11 +10,16 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 
+
 # Mybatis-Plus配置
 mybatis-plus:
   mapper-locations: classpath:mapper/**/*.xml  # mapper文件位置
   global-config:
     db-config:
       id-type: auto # 设置全局实体类主键自增
-
-
+      logic-delete-value: 0 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 1 # 逻辑未删除值(默认为 0)
+      logic-delete-field: showStatus # 配置全局逻辑删除字段，配置此项可以不在实体类的逻辑删除字段上添加@TableLogic注解
+logging:
+  level:
+    com.mall.product: debug

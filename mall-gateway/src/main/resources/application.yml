@@ -1,0 +1,28 @@
+server:
+  port: 88
+spring:
+  cloud:
+    gateway:
+      routes:
+        # springcloud的高版本中弃用了ribbon导致lb不可用，需要重新引入loadbalancer依赖之后能够成功路由
+        - id: mall-admin
+          uri: lb://mall-admin    # 直接填写nacos中注册的服务名称
+          predicates:
+            - Path=/api/renren-fast/**  # 请求控制台的请求
+          filters:
+            - RewritePath=/api/(?<segment>.*), /$\{segment} # 配置过滤器，重写uri
+
+        - id: mall-product
+          uri: lb://mall-product   # 直接填写nacos中注册的服务名称
+          predicates:
+            - Path=/api/product/**  # 请求控制台的请求
+          filters:
+            - RewritePath=/api/(?<segment>/?.*), /$\{segment} # 配置过滤器，重写uri
+
+        # 第三方服务
+        - id: mall-third-party
+          uri: lb://mall-third-party  # 直接填写nacos中注册的服务名称
+          predicates:
+            - Path=/api/third-party/**  # 请求控制台的请求
+          filters:
+            - RewritePath=/api/(?<segment>/?.*), /$\{segment} # 配置过滤器，重写uri

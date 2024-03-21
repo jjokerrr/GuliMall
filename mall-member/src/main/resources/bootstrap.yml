@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: mall-member
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.121.130
+      config:
+        server-addr: 192.168.121.130
+        namespace: b85d427b-d964-4213-8efc-036448ce9ec9

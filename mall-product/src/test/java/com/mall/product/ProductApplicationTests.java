@@ -1,6 +1,5 @@
 package com.mall.product;
 
-import com.mall.product.entity.CategoryEntity;
 import com.mall.product.service.CategoryService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,6 +10,7 @@ import javax.annotation.Resource;
 class ProductApplicationTests {
     @Resource
     private CategoryService categoryService;
+
 
     @Test
     void testInterface() {
@@ -24,4 +24,9 @@ class ProductApplicationTests {
 
     }
 
+
+
+
 }
+
+
