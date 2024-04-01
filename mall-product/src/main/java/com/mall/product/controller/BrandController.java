@@ -60,12 +60,12 @@ public class BrandController {
     }
 
     /**
-     * 修改
+     * 修改，同时需要保证冗余字段修改，冗余字段保存在CategoryBrandRelation中
      */
     @PutMapping("/update")
     // @RequiresPermissions("product:brand:update")
     public R update(@RequestBody BrandEntity brand) {
-        brandService.updateById(brand);
+        brandService.updateBrandWithRelations(brand);
 
         return R.ok();
     }

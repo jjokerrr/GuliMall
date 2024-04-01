@@ -9,6 +9,8 @@ spring:
     password: 10222375
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
 
 
 # Mybatis-Plus配置
@@ -23,3 +25,4 @@ mybatis-plus:
 logging:
   level:
     com.mall.product: debug
+

@@ -1,11 +1,13 @@
 package com.mall.member.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 /**
  * 会员收藏的商品
@@ -43,6 +45,7 @@ public class MemberCollectSpuEntity implements Serializable {
 	/**
 	 * create_time
 	 */
-	private Date createTime;
+	@TableField(fill = FieldFill.INSERT)
+private Date createTime;
 
 }

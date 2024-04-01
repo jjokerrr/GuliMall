@@ -4,8 +4,11 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import org.hibernate.validator.constraints.URL;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.List;
 
@@ -38,18 +41,22 @@ public class CategoryEntity implements Serializable {
     /**
      * 层级
      */
+    @NotBlank
     private Integer catLevel;
     /**
      * 是否显示[0-不显示，1显示]
      */
+    @Pattern(regexp = "[01]")
     private Integer showStatus;
     /**
      * 排序
      */
+    @Min(0)
     private Integer sort;
     /**
      * 图标地址
      */
+    @URL
     private String icon;
     /**
      * 计量单位

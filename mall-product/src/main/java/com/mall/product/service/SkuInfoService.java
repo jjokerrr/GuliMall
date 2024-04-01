@@ -1,8 +1,10 @@
 package com.mall.product.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mall.common.utils.PageUtils;
 import com.mall.product.entity.SkuInfoEntity;
+import com.mall.product.vo.SkuListVO;
 
 import java.util.Map;
 
@@ -15,6 +17,8 @@ import java.util.Map;
  */
 public interface SkuInfoService extends IService<SkuInfoEntity> {
 
-    PageUtils queryPage(Map<String, Object> params);
+    PageUtils queryPage(Map<String, Object> params, QueryWrapper<SkuInfoEntity> query);
+
+    PageUtils querySkuList(Map<String, Object> params, SkuListVO skuListVO);
 }
 

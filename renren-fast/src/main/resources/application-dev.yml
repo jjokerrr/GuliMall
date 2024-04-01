@@ -29,9 +29,11 @@ spring:
           log-slow-sql: true
           slow-sql-millis: 1000
           merge-sql: false
+          db-type: mysql
         wall:
           config:
             multi-statement-allow: true
+          db-type: mysql
 
 
   ##多数据源的配置

@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
@@ -43,6 +45,8 @@ public class BrandEntity implements Serializable {
     /**
      * 显示状态[0-不显示；1-显示]
      */
+    @Min(value = 0, message = "showStatus must be 0 or 1")
+    @Max(value = 1, message = "showStatus must be 0 or 1")
     private Integer showStatus;
     /**
      * 检索首字母
@@ -52,6 +56,7 @@ public class BrandEntity implements Serializable {
     /**
      * 排序
      */
+    @Min(value = 0)
     private Integer sort;
 
 }

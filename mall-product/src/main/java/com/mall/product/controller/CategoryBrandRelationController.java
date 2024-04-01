@@ -1,20 +1,12 @@
 package com.mall.product.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
+import com.mall.common.utils.R;
 import com.mall.product.entity.CategoryBrandRelationEntity;
 import com.mall.product.service.CategoryBrandRelationService;
-import com.mall.common.utils.PageUtils;
-import com.mall.common.utils.R;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 
 /**
@@ -31,14 +23,28 @@ public class CategoryBrandRelationController {
     private CategoryBrandRelationService categoryBrandRelationService;
 
     /**
-     * 列表
+     * 品牌关联分类列表
      */
-    @RequestMapping("/list")
+    @GetMapping("catelog/list")
     // @RequiresPermissions("product:categorybrandrelation:list")
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = categoryBrandRelationService.queryPage(params);
+    public R queryCatelogListFromBrand(@RequestParam("brandId") Long brandId) {
+        if (brandId == null) {
+            return R.ok().put("data", null);
+        }
+        List<CategoryBrandRelationEntity> relationList = categoryBrandRelationService.queryRelationList(brandId,"brand_id");
+        return R.ok().put("data", relationList);
+    }
 
-        return R.ok().put("page", page);
+    /**
+     * 更具分类查询品牌
+     */
+    @GetMapping("brands/list")
+    public R queryBrandListFromCatelog(@RequestParam("catId") Long catId) {
+        if (catId == null) {
+            return R.ok().put("data", null);
+        }
+        List<CategoryBrandRelationEntity> relationList = categoryBrandRelationService.queryRelationList(catId,"catelog_id");
+        return R.ok().put("data", relationList);
     }
 
 
@@ -47,8 +53,8 @@ public class CategoryBrandRelationController {
      */
     @RequestMapping("/info/{id}")
     // @RequiresPermissions("product:categorybrandrelation:info")
-    public R info(@PathVariable("id") Long id){
-		CategoryBrandRelationEntity categoryBrandRelation = categoryBrandRelationService.getById(id);
+    public R info(@PathVariable("id") Long id) {
+        CategoryBrandRelationEntity categoryBrandRelation = categoryBrandRelationService.getById(id);
 
         return R.ok().put("categoryBrandRelation", categoryBrandRelation);
     }
@@ -56,12 +62,12 @@ public class CategoryBrandRelationController {
     /**
      * 保存
      */
-    @RequestMapping("/save")
+    @PostMapping("/save")
     // @RequiresPermissions("product:categorybrandrelation:save")
-    public R save(@RequestBody CategoryBrandRelationEntity categoryBrandRelation){
-		categoryBrandRelationService.save(categoryBrandRelation);
+    public R save(@RequestBody CategoryBrandRelationEntity categoryBrandRelation) {
+        boolean isSucceed = categoryBrandRelationService.saveRelation(categoryBrandRelation);
 
-        return R.ok();
+        return isSucceed ? R.ok() : R.error();
     }
 
     /**
@@ -69,8 +75,8 @@ public class CategoryBrandRelationController {
      */
     @RequestMapping("/update")
     // @RequiresPermissions("product:categorybrandrelation:update")
-    public R update(@RequestBody CategoryBrandRelationEntity categoryBrandRelation){
-		categoryBrandRelationService.updateById(categoryBrandRelation);
+    public R update(@RequestBody CategoryBrandRelationEntity categoryBrandRelation) {
+        categoryBrandRelationService.updateById(categoryBrandRelation);
 
         return R.ok();
     }
@@ -80,8 +86,8 @@ public class CategoryBrandRelationController {
      */
     @RequestMapping("/delete")
     // @RequiresPermissions("product:categorybrandrelation:delete")
-    public R delete(@RequestBody Long[] ids){
-		categoryBrandRelationService.removeByIds(Arrays.asList(ids));
+    public R delete(@RequestBody List<Long> ids) {
+        categoryBrandRelationService.removeByIds(ids);
 
         return R.ok();
     }
