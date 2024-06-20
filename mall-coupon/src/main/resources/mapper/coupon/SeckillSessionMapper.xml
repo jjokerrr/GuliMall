@@ -12,6 +12,11 @@
         <result property="status" column="status"/>
         <result property="createTime" column="create_time"/>
     </resultMap>
+    <select id="querySessionByDays" resultType="com.mall.coupon.entity.SeckillSessionEntity">
+        select *
+        from mall_sms.sms_seckill_session
+        where start_time between #{beginDay} and #{endDay}
+    </select>
 
 
 </mapper>

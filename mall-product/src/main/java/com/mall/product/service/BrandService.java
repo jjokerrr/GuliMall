@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public interface BrandService extends IService<BrandEntity> {
 
-    PageUtils queryPage(Map<String, Object> params);
+    PageUtils queryBrandPage(Map<String, Object> params);
 
     void updateBrandWithRelations(BrandEntity brand);
 }

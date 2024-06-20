@@ -36,8 +36,8 @@ public class AttrController {
      */
     @GetMapping("base/list/{id}")
     // @RequiresPermissions("product:attr:list")
-    public R queryBaseList(@PathVariable("id") Long catelogId, @RequestParam Map<String, Object> params) {
-        PageUtils page = attrService.queryBaseList(catelogId, params);
+    public R queryBaseList(@PathVariable("id") Long catalogId, @RequestParam Map<String, Object> params) {
+        PageUtils page = attrService.queryBaseList(catalogId, params);
 
         return R.ok().put("page", page);
     }
@@ -58,8 +58,8 @@ public class AttrController {
      */
     @GetMapping("sale/list/{id}")
     // @RequiresPermissions("product:attr:list")
-    public R querySaleList(@PathVariable("id") Long catelogId, @RequestParam Map<String, Object> params) {
-        PageUtils page = attrService.querySaleList(catelogId, params);
+    public R querySaleList(@PathVariable("id") Long catalogId, @RequestParam Map<String, Object> params) {
+        PageUtils page = attrService.querySaleList(catalogId, params);
 
         return R.ok().put("page", page);
     }

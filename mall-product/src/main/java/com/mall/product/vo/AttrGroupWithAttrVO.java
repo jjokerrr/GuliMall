@@ -32,7 +32,7 @@ public class AttrGroupWithAttrVO {
     /**
      * 所属分类id
      */
-    private Long catelogId;
+    private Long catalogId;
     /**
      * 属性组下全部属性
      */

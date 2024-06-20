@@ -9,9 +9,6 @@ import java.io.Serializable;
 /**
  * 商品属性
  * 
- * @author zzh
- * @email zzh20001022@163.com
- * @date 2024-03-18 21:45:48
  */
 @Data
 @TableName("pms_attr")
@@ -54,7 +51,7 @@ public class AttrEntity implements Serializable {
 	/**
 	 * 所属分类
 	 */
-	private Long catelogId;
+	private Long catalogId;
 	/**
 	 * 快速展示【是否展示在介绍上；0-否 1-是】，在sku中仍然可以调整
 	 */

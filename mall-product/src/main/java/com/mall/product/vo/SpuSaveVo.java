@@ -19,7 +19,7 @@ public class SpuSaveVo {
 
     private String spuName;
     private String spuDescription;
-    private Long catelogId;
+    private Long catalogId;
     private Long brandId;
     private BigDecimal weight;      // 对于高精度的小数字段，一般使用BigDecimal来代替Float或者Double
     private int publishStatus;

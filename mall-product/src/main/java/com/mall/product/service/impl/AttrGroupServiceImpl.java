@@ -16,8 +16,10 @@ import com.mall.product.mapper.AttrGroupMapper;
 import com.mall.product.service.AttrAttrgroupRelationService;
 import com.mall.product.service.AttrGroupService;
 import com.mall.product.service.AttrService;
+import com.mall.product.vo.Attr;
 import com.mall.product.vo.AttrGroupRelationVO;
 import com.mall.product.vo.AttrGroupWithAttrVO;
+import com.mall.product.vo.SpuItemAttrGroupVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -53,7 +55,7 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupMapper, AttrGroup
         QueryWrapper<AttrGroupEntity> query = new QueryWrapper<AttrGroupEntity>();
         if (!Objects.equals(categoryId, ProductConstant.ALL_LIST_ID)) {
             // 不为0的时候，进行id的精确查询
-            query.eq("catelog_id", categoryId);
+            query.eq("catalog_id", categoryId);
         }
         // 参数不为零，根据查询条件获取列表
         String preciseFiled = "attr_group_id";
@@ -99,7 +101,7 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupMapper, AttrGroup
     public PageUtils getNoRelationAttr(Long attrGroupId, Map<String, Object> params) {
         // 查询当前属性组的类目信息
         AttrGroupEntity attrGroup = getById(attrGroupId);
-        Long catelogId = attrGroup.getCatelogId();
+        Long catalogId = attrGroup.getCatalogId();
 
         // 查询当前属性组全部关联的属性
         List<Long> relationAttrIdList = attrAttrgroupRelationService
@@ -111,7 +113,7 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupMapper, AttrGroup
 
         // 查询满足条件的属性
         QueryWrapper<AttrEntity> query = new QueryWrapper<AttrEntity>()
-                .eq("catelog_id", catelogId)
+                .eq("catalog_id", catalogId)
                 .notIn(!CollectionUtil.isEmpty(relationAttrIdList), "attr_id", relationAttrIdList);
 
         buildKeyQuery(params, query, "attr_id", "attr_name");
@@ -122,9 +124,9 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupMapper, AttrGroup
     }
 
     @Override
-    public List<AttrGroupWithAttrVO> queryAttrGroupWithAttrByCatelogId(Long catelogId) {
+    public List<AttrGroupWithAttrVO> queryAttrGroupWithAttrByCatalogId(Long catalogId) {
         // 查询全部属性组
-        List<AttrGroupEntity> attrGroupEntityList = query().eq("catelog_id", catelogId).list();
+        List<AttrGroupEntity> attrGroupEntityList = query().eq("catalog_id", catalogId).list();
         // 查询属性组下的全部属性
         return attrGroupEntityList.stream().map(attrGroupEntity -> {
             List<AttrEntity> attrEntityList = attrAttrgroupRelationService.queryAttrByAttrGroupId(attrGroupEntity.getAttrGroupId());
@@ -132,6 +134,26 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupMapper, AttrGroup
             BeanUtil.copyProperties(attrGroupEntity, attrGroupWithAttrVO);
             attrGroupWithAttrVO.setAttrs(attrEntityList);
             return attrGroupWithAttrVO;
+        }).collect(Collectors.toList());
+    }
+    /**
+     * 查找分类下的全部属性信息，不包括属性值
+     */
+
+    @Override
+    public List<SpuItemAttrGroupVO> querySpuItemAttrByCatelogId(Long catelogId) {
+        List<AttrGroupWithAttrVO> attrGroupWithAttrVOList = queryAttrGroupWithAttrByCatalogId(catelogId);
+        return attrGroupWithAttrVOList.stream().map(attrGroupWithAttrVO -> {
+            SpuItemAttrGroupVO spuItemAttrGroupVO = new SpuItemAttrGroupVO();
+            spuItemAttrGroupVO.setGroupName(attrGroupWithAttrVO.getAttrGroupName());
+            List<Attr> attrList = attrGroupWithAttrVO.getAttrs().stream().map(attrEntity -> {
+                Attr attr = new Attr();
+                attr.setAttrId(attrEntity.getAttrId());
+                attr.setAttrName(attrEntity.getAttrName());
+                return attr;
+            }).collect(Collectors.toList());
+            spuItemAttrGroupVO.setAttrs(attrList);
+            return spuItemAttrGroupVO;
         }).collect(Collectors.toList());
     }
 

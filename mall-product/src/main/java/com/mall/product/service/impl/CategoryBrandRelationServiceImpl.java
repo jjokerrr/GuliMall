@@ -50,9 +50,9 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
     @Override
     @Transactional
     public boolean saveRelation(CategoryBrandRelationEntity categoryBrandRelation) {
-        CategoryEntity category = categoryMapper.selectById(categoryBrandRelation.getCatelogId());
+        CategoryEntity category = categoryMapper.selectById(categoryBrandRelation.getCatalogId());
         BrandEntity brand = brandMapper.selectById(categoryBrandRelation.getBrandId());
-        categoryBrandRelation.setCatelogName(category.getName());
+        categoryBrandRelation.setCatalogName(category.getName());
         categoryBrandRelation.setBrandName(brand.getName());
         return save(categoryBrandRelation);
     }

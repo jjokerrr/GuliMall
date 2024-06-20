@@ -10,6 +10,29 @@ spring:
     password: 10222375
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
+  rabbitmq:
+    host: 192.168.121.130
+    port: 5672
+    virtual-host: /
+    username: 10222375
+    password: 10222375
+    listener:
+      simple:
+        acknowledge-mode: manual # 设置手动确认机制
+  session:
+    store-type: redis
+  redis:
+    host: 192.168.121.130
+    port: 6379
+
+  zipkin:
+    discovery-client-enabled: false
+    base-url: http://192.168.121.130:9411/
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      rate: 1
 
 
 # Mybatis-Plus配置
@@ -18,3 +41,33 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto # 设置全局实体类主键自增
+
+mall:
+  thread:
+    core-pool-size: 10
+    keep-alive-time: 1000
+    maximum-pool-size: 50
+
+seata:
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 192.168.121.130:8848
+      group: DEFAULT_GROUP
+      username: nacos
+      password: nacos
+      namespace: ""
+  tx-service-group: mall-seata
+  service:
+    vgroup-mapping:
+      mall-seata: SH
+
+# 支付宝支付配置
+alipay:
+  app-id: 9021000137633945
+  private-key: MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQD2meiuNhP00XmLCf2Quz2d2wNYl2I9tD3lc/FgXCRuOnpC9z8wSwyeE6H5rRvRU2e0p1SoeBSWpX09G/Z7/BdFjesp5+kohH0TOE7RGF1Duk7DHhRoEQel7bcQPFrBZ8Fj35WpCQKMOGngQoAlqH+jJnqxa7+hZZ/25Pmu2XLy7o6RJ+WcA5U+6CJJwX5r18JYG1dmJavGcTEOCmsGmwfsja5IlpkfzTwdjIm3XQO+igHnxhh4tcT2brYYVfcUwnntrQa3cBrcLYHFvbUsNJmfV/WVB45684pwGXQm6eDPYwYRyPgZP30TcXptaQ9frFFu/pkITrovOPHVyKTTTamxAgMBAAECggEBAMrVIzaP0nBPEArV59Nwvyik6SaoNa0NINAnQoWApJJp1QBZv4aoZDNtcJAd28CcOrOz4oVDZ6PVcKKf6mhmnHmgVqo8T2H9P6dcbC++O5AmoPwKNLy4LTNEyIs5KWjlP4M3dzD28TqGeEd2S1MuOfXnA4oFVzSYky+PfPNddhfrlMrUVqFL6Orit6ilLkczUSzaLpNHR35EdASMIa04rM64qE4jqWPzxZFhTCZvg4ElcTC8/MA/H0UuP3KzfMKGPoGtuUHRy9+3Eil02UBihSNChC2rhhIE0ACJJ50dbPoEBxVMUyWLOdEB63I1MbI6ggPTuizWsYJ83lvQDZGJmfECgYEA/ilJiznJ8qphYBFRF9BpaXEz8NpIJ15mqZRqypYu1qJJ+nGjoQ7K8kWVQit+eAU0prFlocBAMx3VicCSMFLCOJQHbzHNI668l1AlPw3EH8+GiFx/MuUEzpTKR9fbc+Dy/+9Bw2vQz1KwHDgUmTboMzQp/LX3Ejj2Ic1vkVG0db0CgYEA+GKexR3Zj1LVeiMQbATxkVgbPVryEBk01mjpJ+kBV64OFJDAvD06HJHcRNOO+s/Jkxbjs+NF4Hh+QJpLjjvpBv0pb8PHOyiLho9DrVv5dzvsYpsQRMOBY/pOTaQ1G0EdVQ3FzS5Zeh/aPKLoUzpGaIrEvTh/mpU4jijPka6iIQUCgYBe+7cMXPBny9zQNiiEKdL7IN80Z58Hd3QOc/Tk+PNQKx5Shh2MlyapG/AH5pFA8VEX6rv8kwhrEf83l8wKWyNSWZ/dolLzvt2j/sOsqMxexwOT+l1e+8+sFFb0Oms9BxhJJXUCP0yt7kz6fsrT530nhZsbYjWPjdIOF+RV/p7eUQKBgFcOact4zNoZFE18oLLbgLeKg/GbQKA31XcYyi980UWj8bdvjL3tT8LXtLZC2Cg8T9BIA4L3M3SbhtSpv7WYdfJHJRDRM7EeYtjEudm3FNafoBhndOpFA8LA5lT8Ksjkp505+IwTpLTTGTCLgJY7JJZbnN0dQkwx5OKelzHeXWDpAoGBAKLu3WydEpPstUO+xEqGtJlJPdxukgZ9Su75LiM+/goFcvWnFA1X8UviE2KjMdACnB+h/fDhWi/sPC1838CYmdMC4jFfqRSP7PEON2F0zP+Nu3GwM3pmdiY2SS7TUvcIUrjburudgBHJ2C+XL6xLd7YPknU/gmYx1TWe4E7XriPH
+  alipay-public-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnD2LlnHtP3NNzpvLOyiDFVM2Y+RiTpunRwpXknHVJyvbyni8M3ELjcKUcv4N2uUp/TnVirDEA/WeuVTnB54TaBoH3C5ifLjq9HX3C3aP9mENc1zb26OlhmDL5aPPttyxUrXX9FOF7/m9nnw7jKSoq+gOFAqrL6XrP2ND6X3iyguqZIf+x1v09uDLV9z4s5+jJA/TGt+Y7E0TVJUiaQvmTqN5APIZFZEja5GyBx2IVvsGO4bXXUqC9Bgtgo3SvBooSAGdMGbT7zRCSJhHI6MXApyJk3gU0K0LD2ZGTdP1S8FXm3ixx4K//ceOQcaWOn2YnaolI555kvwxDjxOTXN+hQIDAQAB
+  server-url: https://openapi-sandbox.dl.alipaydev.com/gateway.do
+  return-url: http://order.mall.com/memberOrder.html
+  notify_url: xxx

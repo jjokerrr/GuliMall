@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class SkuListVO {
-    private Long catelogId;
+    private Long catalogId;
     private Long brandId;
     private String min;
     private String max;

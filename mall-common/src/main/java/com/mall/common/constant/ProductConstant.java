@@ -18,4 +18,27 @@ public class ProductConstant {
      * 查询全部数据id
      */
     public static final Long ALL_LIST_ID = 0L;
+
+
+    /**
+     * spu新建状态
+     */
+    public static final Long SPU_NEW_STATUS = 0L;
+    /**
+     * spu上架状态
+     */
+    public static final Long SPU_UP_STATUS = 1L;
+    /**
+     * spu下架状态
+     */
+    public static final Long SPU_DOWN_STATUS = 2L;
+    /**
+     * 分类显示状态
+     */
+    public static final Integer CATELOG_SHOW_STATUS = 1;
+    /**
+     * 分类隐藏状态
+     */
+    public static final Integer CATELOG_HIDDEN_STATUS = 0;
+
 }

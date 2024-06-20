@@ -5,6 +5,14 @@ spring:
     loadbalancer:
       cache:
         enabled: true
+    sentinel:
+      filter:
+        enabled: false
+      transport:
+        dashboard: 192.168.121.130
+        port: 8719
+      eager: true
+
     gateway:
       routes:
         # springcloud的高版本中弃用了ribbon导致lb不可用，需要重新引入loadbalancer依赖之后能够成功路由
@@ -30,13 +38,38 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>/?.*), /$\{segment} # 配置过滤器，重写uri
 
-        # 第三方服务
+        # 仓储服务
         - id: mall-ware
           uri: lb://mall-ware  # 直接填写nacos中注册的服务名称
           predicates:
             - Path=/api/ware/**  # 请求控制台的请求
           filters:
             - RewritePath=/api/(?<segment>/?.*), /$\{segment} # 配置过滤器，重写uri
+
+        # 搜索服务
+        - id: mall-search
+          uri: lb://mall-search # 直接填写nacos中注册的服务名称
+          predicates:
+            - Path=/api/search/**  # 请求控制台的请求
+          filters:
+            - RewritePath=/api/(?<segment>/?.*), /$\{segment} # 配置过滤器，重写uri
+
+        # 优惠券请求
+        - id: mall-coupon
+          uri: lb://mall-coupon  # 直接填写nacos中注册的服务名称
+          predicates:
+            - Path=/api/coupon/**  # 请求控制台的请求
+          filters:
+            - RewritePath=/api/(?<segment>/?.*), /$\{segment} # 配置过滤器，重写uri
+
+        # 秒杀
+        - id: mall-seckill
+          uri: lb://mall-seckill  # 直接填写nacos中注册的服务名称
+          predicates:
+            - Path=/api/seckill/**  # 请求控制台的请求
+          filters:
+            - RewritePath=/api/(?<segment>/?.*), /$\{segment} # 配置过滤器，重写uri
+
 
         # 第三方服务
         - id: mall-third-party
@@ -45,5 +78,57 @@ spring:
             - Path=/api/third-party/**  # 请求控制台的请求
           filters:
             - RewritePath=/api/(?<segment>/?.*), /$\{segment} # 配置过滤器，重写uri
+
+
+
+
+        # 认证服务
+        - id: mall-auth-host
+          uri: lb://mall-auth
+          predicates:
+            - Host=auth.mall.com
+
+        # 购物车服务
+        - id: mall-cart-host
+          uri: lb://mall-cart
+          predicates:
+            - Host=cart.mall.com
+
+        # 订单服务
+        - id: mall-order-host
+          uri: lb://mall-order
+          predicates:
+            - Host=order.mall.com
+
+        # host,item
+        - id: mall-item-host
+          uri: lb://mall-product  # 直接填写nacos中注册的服务名称
+          predicates:
+            - Host=mall.com,item.mall.com  # host
+
+        # search
+        - id: search-host
+          uri: lb://mall-search # 直接填写nacos中注册的服务名称
+          predicates:
+            - Host=search.mall.com
+
+        # member
+        - id: member-host
+          uri: lb://mall-member # 直接填写nacos中注册的服务名称
+          predicates:
+            - Host=member.mall.com
+
+        # seckill
+        - id: member-seckill
+          uri: lb://mall-seckill # 直接填写nacos中注册的服务名称
+          predicates:
+            - Host=seckill.mall.com
+
+
+
+
+
+
+
 
 

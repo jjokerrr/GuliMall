@@ -1,0 +1,41 @@
+# 应用服务 WEB 访问端口
+server:
+  port: 8010
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+  thymeleaf:
+    cache: false
+  redis:
+    host: 192.168.121.130
+    port: 6379
+  session:
+    store-type: redis
+  mvc:
+    path match:
+      matching-strategy: ANT_PATH_MATCHER
+  rabbitmq:
+    host: 192.168.121.130
+    port: 5672
+    virtual-host: /
+    username: 10222375
+    password: 10222375
+    listener:
+      simple:
+        acknowledge-mode: manual # 设置手动确认机制
+  cloud:
+    sentinel:
+      transport:
+        dashboard: 192.168.121.130:8080
+        port: 8719
+  zipkin:
+    discovery-client-enabled: false
+    base-url: http://192.168.121.130:9411/
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      rate: 1
+feign:
+  sentinel:
+    enabled: true  # 开启feign远程调用的sentinel熔断降级策略

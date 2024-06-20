@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: mall-auth
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.121.130:8848
+      config:
+        server-addr: 192.168.121.130:8848
+        namespace: e0ce6003-6a07-4896-87d9-a3963bb6d449

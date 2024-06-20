@@ -1,9 +1,13 @@
 package com.mall.product.controller;
 
+import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson.JSON;
+import com.mall.common.constant.RedisConstant;
 import com.mall.common.utils.R;
 import com.mall.product.entity.CategoryEntity;
 import com.mall.product.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,16 +27,24 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private StringRedisTemplate redisTemplate;
+
     /**
      * 父子方法
      */
     @GetMapping("/list/tree")
     // @RequiresPermissions("product:category:list")
     public R listWithTree(@RequestParam Map<String, Object> params) {
+        String catalogTree = redisTemplate.opsForValue().get(RedisConstant.PRODUCT_CATEGORY_TREE);
+        if (!StrUtil.isBlank(catalogTree)) {
+            List<CategoryEntity> categoryEntityList = JSON.parseArray(catalogTree, CategoryEntity.class);
+            return R.ok().put("data", categoryEntityList);
+        }
 
         List<CategoryEntity> categoryEntityList = categoryService.listCategoryTree();
 //        PageUtils page = categoryService.queryPage(params);
-
+        redisTemplate.opsForValue().set(RedisConstant.PRODUCT_CATEGORY_TREE, JSON.toJSONString(categoryEntityList));
         return R.ok().put("data", categoryEntityList);
     }
 

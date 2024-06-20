@@ -25,9 +25,9 @@ public class CategoryBrandRelationController {
     /**
      * 品牌关联分类列表
      */
-    @GetMapping("catelog/list")
+    @GetMapping("catalog/list")
     // @RequiresPermissions("product:categorybrandrelation:list")
-    public R queryCatelogListFromBrand(@RequestParam("brandId") Long brandId) {
+    public R queryCatalogListFromBrand(@RequestParam("brandId") Long brandId) {
         if (brandId == null) {
             return R.ok().put("data", null);
         }
@@ -39,11 +39,11 @@ public class CategoryBrandRelationController {
      * 更具分类查询品牌
      */
     @GetMapping("brands/list")
-    public R queryBrandListFromCatelog(@RequestParam("catId") Long catId) {
+    public R queryBrandListFromCatalog(@RequestParam("catId") Long catId) {
         if (catId == null) {
             return R.ok().put("data", null);
         }
-        List<CategoryBrandRelationEntity> relationList = categoryBrandRelationService.queryRelationList(catId,"catelog_id");
+        List<CategoryBrandRelationEntity> relationList = categoryBrandRelationService.queryRelationList(catId,"catalog_id");
         return R.ok().put("data", relationList);
     }
 

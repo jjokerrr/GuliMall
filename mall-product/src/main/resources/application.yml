@@ -11,7 +11,21 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
-
+  thymeleaf:
+    cache: false
+  redis:
+    host: 192.168.121.130
+    port: 6379
+  session:
+    store-type: redis
+  zipkin:
+    discovery-client-enabled: false
+    base-url: http://192.168.121.130:9411/
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      rate: 1
 
 # Mybatis-Plus配置
 mybatis-plus:
@@ -22,7 +36,26 @@ mybatis-plus:
       logic-delete-value: 0 # 逻辑已删除值(默认为 1)
       logic-not-delete-value: 1 # 逻辑未删除值(默认为 0)
       logic-delete-field: showStatus # 配置全局逻辑删除字段，配置此项可以不在实体类的逻辑删除字段上添加@TableLogic注解
-logging:
-  level:
-    com.mall.product: debug
 
+
+mall:
+  thread:
+    core-pool-size: 10
+    keep-alive-time: 1000
+    maximum-pool-size: 50
+
+
+seata:
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 192.168.121.130:8848
+      group: DEFAULT_GROUP
+      username: nacos
+      password: nacos
+      namespace: ""
+  tx-service-group: mall-seata
+  service:
+    vgroup-mapping:
+      mall-seata: SH

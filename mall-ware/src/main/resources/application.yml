@@ -10,7 +10,25 @@ spring:
     password: 10222375
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
-
+  session:
+    store-type: redis
+  redis:
+    host: 192.168.121.130
+    port: 6379
+  rabbitmq:
+    host: 192.168.121.130
+    port: 5672
+    virtual-host: /
+    username: 10222375
+    password: 10222375
+  zipkin:
+    discovery-client-enabled: false
+    base-url: http://192.168.121.130:9411/
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      rate: 1
 
 # Mybatis-Plus配置
 mybatis-plus:
@@ -18,3 +36,19 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto # 设置全局实体类主键自增
+
+
+seata:
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 192.168.121.130:8848
+      group: DEFAULT_GROUP
+      username: nacos
+      password: nacos
+      namespace: ""
+  tx-service-group: mall-seata
+  service:
+    vgroup-mapping:
+      mall-seata: SH

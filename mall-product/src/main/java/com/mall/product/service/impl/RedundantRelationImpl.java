@@ -31,8 +31,8 @@ public class RedundantRelationImpl implements RedundantRelation {
     @Override
     public void updateCategoryWithBCRelation(CategoryEntity category) {
         categoryBrandRelationService.update()
-                .eq("catelog_id", category.getCatId())
-                .set("catelog_name", category.getName())
+                .eq("catalog_id", category.getCatId())
+                .set("catalog_name", category.getName())
                 .update();
     }
 }

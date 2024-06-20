@@ -8,6 +8,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 秒杀活动场次
@@ -48,5 +49,11 @@ public class SeckillSessionEntity implements Serializable {
 
     @TableField(fill = FieldFill.INSERT)
     private Date createTime;
+
+    /**
+     * 秒杀对应商品列表
+     */
+    @TableField(exist = false)
+    private List<SeckillSkuRelationEntity> relationSkus;
 
 }

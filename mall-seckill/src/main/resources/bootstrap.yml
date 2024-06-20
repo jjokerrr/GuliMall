@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: mall-seckill
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.121.130:8848
+      config: # nacos的配置中心和注册中心地址需要分开配置
+        server-addr: 192.168.121.130:8848
+        namespace: b936e645-6dd5-4291-b32b-db771a724bdb

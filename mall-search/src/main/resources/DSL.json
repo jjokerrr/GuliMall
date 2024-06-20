@@ -1,0 +1,103 @@
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "skuTitle": "HUAWEI"
+          }
+        }
+      ],
+      "filter": [
+        {
+          "terms": {
+            "brandId": [
+              9,
+              10
+            ]
+          }
+        },
+        {
+          "term": {
+            "catalogId": 225
+          }
+        },
+        {
+          "term": {
+            "hasStock": true
+          }
+        },
+        {
+          "range": {
+            "skuPrice": {
+              "gte": 0,
+              "lte": 8000
+            }
+          }
+        },
+        {
+          "nested": {
+            "path": "attrs",
+            "query": {
+              "bool": {
+                "filter": [
+                  {
+                    "term": {
+                      "attrs.attrId": {
+                        "value": "15"
+                      }
+                    }
+                  },
+                  {
+                    "term": {
+                      "attrs.attrValue": "海思（Hisilicon）"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "highlight": {
+    "fields": {
+      "skuTitle": {
+        "pre_tags": "<em>",
+        "post_tags": "</em>"
+      }
+    }
+  },
+  "aggs": {
+    "attrAgg": {
+      "nested": {
+        "path": "attrs"
+      },
+      "aggs": {
+        "attrIdAgg": {
+          "terms": {
+            "field": "attrs.attrId",
+            "size": 10
+          },
+          "aggs": {
+            "attrNameAgg": {
+              "terms": {
+                "field": "attrs.attrName",
+                "size": 10
+              }
+            },
+            "attrValueAgg": {
+              "terms": {
+                "field": "attrs.attrValue",
+                "size": 10
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "from": 0,
+  "size": 20
+}

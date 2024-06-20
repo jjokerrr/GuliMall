@@ -4,11 +4,13 @@ import com.mall.common.utils.PageUtils;
 import com.mall.common.utils.R;
 import com.mall.product.entity.SkuInfoEntity;
 import com.mall.product.service.SkuInfoService;
+import com.mall.product.service.SkuSaleAttrValueService;
 import com.mall.product.vo.SkuListVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 
@@ -25,12 +27,26 @@ public class SkuInfoController {
     @Autowired
     private SkuInfoService skuInfoService;
 
+    @Autowired
+    private SkuSaleAttrValueService skuSaleAttrValueService;
+
+
+    /**
+     * 获取最新价格
+     */
+    @PostMapping("getCurrentPrice")
+    public R getCurrentPrice(@RequestBody List<Long> skuIds) {
+        List<SkuInfoEntity> skuInfoEntityList = skuInfoService.listByIds(skuIds);
+        return R.ok().put("data", skuInfoEntityList);
+
+    }
+
+
     /**
      * 查询相关sku列表
      * 参数： page limit key catlogeId,brandId,min,max
      * 当某一参数为零，表示该参数不需要进行过滤
      */
-    // TODO: 修改sku查询
     @RequestMapping("/list")
     // @RequiresPermissions("product:skuinfo:list")
     public R list(SkuListVO skuListVO, @RequestParam Map<String, Object> params) {
@@ -39,6 +55,14 @@ public class SkuInfoController {
         return R.ok().put("page", page);
     }
 
+    /**
+     * 查询sku全部组合信息
+     */
+    @GetMapping("/saleAttr/{skuId}")
+    public R getSaleAttrsBySkuId(@PathVariable("skuId") Long skuId) {
+        List<String> saleAttrs = skuSaleAttrValueService.getSaleAttrsBySkuId(skuId);
+        return R.ok().put("data", saleAttrs);
+    }
 
     /**
      * 信息

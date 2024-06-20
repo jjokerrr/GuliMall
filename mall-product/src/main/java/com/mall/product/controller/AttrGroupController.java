@@ -48,9 +48,9 @@ public class AttrGroupController {
         AttrGroupEntity attrGroup = attrGroupService.getById(attrGroupId);
 
         // 拼接根路径，用于前端显示
-        Long catelogId = attrGroup.getCatelogId();
-        List<Long> catelogPath = categoryService.getCatelogPath(catelogId);
-        attrGroup.setCatelogPath(catelogPath);
+        Long catalogId = attrGroup.getCatalogId();
+        List<Long> catalogPath = categoryService.getCatalogPath(catalogId);
+        attrGroup.setCatalogPath(catalogPath);
 
         return R.ok().put("attrGroup", attrGroup);
     }
@@ -144,9 +144,9 @@ public class AttrGroupController {
     /**
      * 获取属性组及其关联属性
      */
-    @GetMapping("{catelogId}/withattr")
-    public R queryAttrGroupWithAttr(@PathVariable("catelogId") Long catelogId) {
-        List<AttrGroupWithAttrVO> attrGroupWithAttrVOList = attrGroupService.queryAttrGroupWithAttrByCatelogId(catelogId);
+    @GetMapping("{catalogId}/withattr")
+    public R queryAttrGroupWithAttr(@PathVariable("catalogId") Long catalogId) {
+        List<AttrGroupWithAttrVO> attrGroupWithAttrVOList = attrGroupService.queryAttrGroupWithAttrByCatalogId(catalogId);
         return R.ok().put("data", attrGroupWithAttrVOList);
     }
 

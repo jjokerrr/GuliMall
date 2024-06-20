@@ -1,0 +1,41 @@
+# 应用服务 WEB 访问端口
+server:
+  port: 8007
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+  thymeleaf:
+    cache: false
+  session:
+    store-type: redis
+  redis:
+    host: 192.168.121.130
+  zipkin:
+    discovery-client-enabled: false
+    base-url: http://192.168.121.130:9411/
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      rate: 1
+
+elasticsearch:
+  url: 192.168.121.130
+  port: 9200
+
+
+seata:
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 192.168.121.130:8848
+      group: DEFAULT_GROUP
+      username: nacos
+      password: nacos
+      namespace: ""
+  tx-service-group: mall-seata
+  service:
+    vgroup-mapping:
+      mall-seata: SH
+

@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -58,9 +59,9 @@ public class AttrServiceImpl extends ServiceImpl<AttrMapper, AttrEntity> impleme
             BeanUtil.copyProperties(attrEntity, attrRespVO);
 
             // 注入cateName字段
-            CategoryEntity categoryEntity = categoryService.getById(attrEntity.getCatelogId());
+            CategoryEntity categoryEntity = categoryService.getById(attrEntity.getCatalogId());
             if (!BeanUtil.isEmpty(categoryEntity))
-                attrRespVO.setCatelogName(categoryEntity.getName());
+                attrRespVO.setCatalogName(categoryEntity.getName());
 
             // 注入attrGroupName字段
             AttrAttrgroupRelationEntity relationEntity = attrAttrgroupRelationMapper
@@ -96,19 +97,21 @@ public class AttrServiceImpl extends ServiceImpl<AttrMapper, AttrEntity> impleme
     }
 
     @Override
-    public PageUtils queryBaseList(Long catelogId, Map<String, Object> params) {
-        String catelogField = "catelog_id";
-        QueryWrapper<AttrEntity> query = getQuery(catelogField, catelogId, params);
+    public PageUtils queryBaseList(Long catalogId, Map<String, Object> params) {
+        String catalogField = "catalog_id";
+        QueryWrapper<AttrEntity> query = getQuery(catalogField, catalogId, params);
         return queryPage(params, query);
     }
 
     @Override
-    public PageUtils querySaleList(Long catelogId, Map<String, Object> params) {
-        String catelogField = "catelog_id";
-        QueryWrapper<AttrEntity> query = getQuery(catelogField, catelogId, params);
+    public PageUtils querySaleList(Long catalogId, Map<String, Object> params) {
+        String catalogField = "catalog_id";
+        QueryWrapper<AttrEntity> query = getQuery(catalogField, catalogId, params);
         query.in("attr_type", ProductConstant.ATTR_SALE_TYPE, ProductConstant.ATTR_ALL_TYPE);
         return queryPage(params, query);
     }
+
+
 
 
     @NotNull
@@ -137,8 +140,8 @@ public class AttrServiceImpl extends ServiceImpl<AttrMapper, AttrEntity> impleme
         AttrRespVO attrRespVO = new AttrRespVO();
         BeanUtil.copyProperties(attr, attrRespVO);
         // 注入分类路径
-        List<Long> catelogPath = categoryService.getCatelogPath(attrRespVO.getCatelogId());
-        attrRespVO.setCatelogPath(catelogPath);
+        List<Long> catalogPath = categoryService.getCatalogPath(attrRespVO.getCatalogId());
+        attrRespVO.setCatalogPath(catalogPath);
 
         // 注入属性组信息
         AttrAttrgroupRelationEntity relationEntity = attrAttrgroupRelationMapper

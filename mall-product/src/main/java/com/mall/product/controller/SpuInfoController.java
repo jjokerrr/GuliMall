@@ -26,11 +26,14 @@ public class SpuInfoController {
     @Autowired
     private SpuInfoService spuInfoService;
 
+    @GetMapping(value = "/skuId/{skuId}")
+    public R getSpuInfoBySkuId(@PathVariable("skuId") Long skuId) {
+        SpuInfoEntity spuInfo = spuInfoService.querySpuBySkuId(skuId);
+        return R.ok().put("data", spuInfo);
+    }
+
     /**
      * 查询spu列表
-     *
-     * @Parameter [status, catelogId, brandId, params]
-     * @Return R
      */
     @RequestMapping("/list")
     // @RequiresPermissions("product:spuinfo:list")
@@ -41,6 +44,14 @@ public class SpuInfoController {
         return R.ok().put("page", page);
     }
 
+    /**
+     * 上架商品，spu为单位
+     */
+    @PostMapping("{spuId}/up")
+    public R upSpuById(@PathVariable("spuId") Long spuId) {
+        spuInfoService.up(spuId);
+        return R.ok();
+    }
 
     /**
      * 信息

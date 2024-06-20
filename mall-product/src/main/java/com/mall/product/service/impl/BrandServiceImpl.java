@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mall.common.constant.ProductConstant;
 import com.mall.common.utils.PageUtils;
 import com.mall.common.utils.Query;
 import com.mall.product.entity.BrandEntity;
@@ -23,20 +24,8 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, BrandEntity> impl
     @Resource
     private RedundantRelation redundantRelation;
 
-    @Override
-    public PageUtils queryPage(Map<String, Object> params) {
-        String key = (String) params.get("key");
 
-        QueryWrapper<BrandEntity> query = new QueryWrapper<BrandEntity>();
-        if (!StrUtil.isEmpty(key)) {
-            // 精确匹配brand_id，模糊匹配name
-            query.and(attrGroupIdWrapper -> {
-                attrGroupIdWrapper
-                        .eq("brand_id", key)
-                        .or()
-                        .like("name", key);
-            });
-        }
+    public PageUtils queryPage(Map<String, Object> params, QueryWrapper<BrandEntity> query) {
         IPage<BrandEntity> page = this.page(
                 new Query<BrandEntity>().getPage(params),
                 query
@@ -46,13 +35,38 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, BrandEntity> impl
     }
 
     @Override
+    public PageUtils queryBrandPage(Map<String, Object> params) {
+        String key = (String) params.get("key");
+
+        QueryWrapper<BrandEntity> query = new QueryWrapper<BrandEntity>();
+        buildKeyQuery(key, query, "brand_id", "name");
+
+
+        return queryPage(params, query);
+    }
+
+
+    private <T> void buildQuery(Number key, QueryWrapper<T> query, String keyField) {
+        if (!(key == null) && !key.toString().equals(ProductConstant.ALL_LIST_ID.toString())) {
+            query.eq(keyField, key);
+        }
+    }
+
+    private <T> void buildKeyQuery(String key, QueryWrapper<T> query, String idField, String nameField) {
+        if (!StrUtil.isBlank(key)) {
+            query.and(queryWrapper -> queryWrapper.eq(idField, key)
+                    .or()
+                    .like(nameField, key));
+        }
+    }
+
+    @Override
     @Transactional
     public void updateBrandWithRelations(BrandEntity brand) {
         updateById(brand);
         // 保证冗余字段的一致性
         if (!StrUtil.isBlank(brand.getName())) {
             redundantRelation.updateBrandWithBCRelation(brand);
-            // TODO: 更新冗余关联
         }
 
     }

@@ -62,10 +62,11 @@ public class PurchaseDetailServiceImpl extends ServiceImpl<PurchaseDetailMapper,
                     .like(nameField, key));
         }
     }
+
     /**
      * 根据采购单id获取对应的采购商品列表
      */
-    public List<PurchaseDetailEntity> queryPurchaseDetailListByPurchaseId(Long purchaseId){
+    public List<PurchaseDetailEntity> queryPurchaseDetailListByPurchaseId(Long purchaseId) {
         return query().eq("purchase_id", purchaseId).list();
     }
 }

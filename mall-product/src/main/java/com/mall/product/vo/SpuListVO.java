@@ -11,7 +11,7 @@ public class SpuListVO {
     /**
      * 分类Id
      */
-    private Long catelogId;
+    private Long catalogId;
     /**
      * 品牌Id
      */

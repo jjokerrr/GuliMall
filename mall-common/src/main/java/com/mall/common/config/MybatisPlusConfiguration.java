@@ -12,7 +12,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @ConditionalOnBean(DataSource.class)  // 只有spring容器中存在DataSource类型的Bean对象时该配置类才会生效，作用，可以方式引用该依赖且不连接数据库的项目加载该配置
-public class MybatisPlusConfigration {
+public class MybatisPlusConfiguration {
 
     /**
      * 添加分页插件

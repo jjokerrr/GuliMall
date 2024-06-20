@@ -1,2 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.mall.common.config.MybatisPlusConfigration
+com.mall.common.config.MybatisPlusConfiguration,\
+com.mall.common.config.HttpSessionConfig,\
+com.mall.common.config.LoginConfiguration,\
+com.mall.common.config.ThreadPoolConfiguration

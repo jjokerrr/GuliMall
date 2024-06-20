@@ -7,6 +7,7 @@ import com.mall.product.entity.AttrEntity;
 import com.mall.product.entity.AttrGroupEntity;
 import com.mall.product.vo.AttrGroupRelationVO;
 import com.mall.product.vo.AttrGroupWithAttrVO;
+import com.mall.product.vo.SpuItemAttrGroupVO;
 
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,9 @@ public interface AttrGroupService extends IService<AttrGroupEntity> {
 
     PageUtils getNoRelationAttr(Long attrGroupId, Map<String, Object> params);
 
-    List<AttrGroupWithAttrVO> queryAttrGroupWithAttrByCatelogId(Long catelogId);
+    List<AttrGroupWithAttrVO> queryAttrGroupWithAttrByCatalogId(Long catalogId);
+
+    List<SpuItemAttrGroupVO> querySpuItemAttrByCatelogId(Long catelogId);
 }
+
 

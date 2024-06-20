@@ -51,4 +51,13 @@ public class ProductAttrValueServiceImpl extends ServiceImpl<ProductAttrValueMap
 
     }
 
+    /**
+     * 更具spu查找全部的规格属性
+     */
+    @Override
+    public List<ProductAttrValueEntity> querySpuAttrById(Long spuId) {
+        if (spuId == null) return null;
+        return lambdaQuery().eq(ProductAttrValueEntity::getSpuId, spuId).list();
+    }
+
 }

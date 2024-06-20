@@ -16,5 +16,10 @@ import java.util.Map;
 public interface WareOrderTaskService extends IService<WareOrderTaskEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+
+    Boolean releaseLockedByOrderSn(String orderSn);
+
+    void confirmAndDeduct(String orderSn);
 }
 
