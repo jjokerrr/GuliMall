@@ -3,8 +3,8 @@ server:
 # 阿里云存储服务配置
 alibaba:
   cloud:
-    access-key: LTAI5tFMcQ7xv7nVmeBS4pi3
-    secret-key: kKw2emgjUy3pEU3MFyI4ckiyfMoKl5
+#    access-key: LTAI5tFMcQ7xv7nVmeBS4pi3
+#    secret-key: kKw2emgjUy3pEU3MFyI4ckiyfMoKl5
     oss:
       endpoint: oss-cn-beijing.aliyuncs.com
       bucket: mall-zzh-oss
